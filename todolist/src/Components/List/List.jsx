@@ -13,11 +13,11 @@ export default class List extends Component {
   }
 
   render() {
-    const {todos,changeTodo,deleteTodo,Editing} = this.props
+    const {todos,changeTodo,deleteTodo,Editing, beNtodo} = this.props
     return (
         <div style={{display: todos.length ? 'block' : 'none'}} className="main"> 
             {  todos.map((todo) => {
-                return  <Item key={todo.id} {...todo} changeTodo={changeTodo} deleteTodo={deleteTodo} Editing={Editing}/>
+                return  <Item key={todo.id} {...todo} changeTodo={changeTodo}  beNtodo={beNtodo} deleteTodo={deleteTodo} Editing={Editing}/>
             })}
             
 	    </div>

@@ -3,24 +3,41 @@ import React, { Component } from 'react';
 
 export default class Filter extends Component {
     
-    state={isactive:true}
+    state={isactive:false,
+        isAll:true,
+        iscompleted:false
+        }
 
     handleAll = ()=>{
-        const {isactive}=this.state
-        
+        this.setState({
+            isAll:true,
+            isactive:false,
+            iscompleted:false
+        })
         this.props.viewAll()
     }
     handleActive = ()=>{
+        this.setState({
+            isAll:false,
+            isactive:true,
+            iscompleted:false
+        })
         this.props.viewActive()
     }
     clearCompleted = ()=>{
         this.props.deleteCpd()
     }
     handleCompleted = ()=>{
+        this.setState({
+            isactive:false,
+            isAll:false,
+            iscompleted:true
+        })
         this.props.viewCpd()
     }
   render() {
       const {todos} = this.props
+      const {isactive,isAll,iscompleted} = this.state
       const undoneCount = todos.reduce((pre,todo)=>{return pre-(todo.done?1:0)},todos.length)
       const doneCount = todos.reduce((pre,todo)=>{return pre+(todo.done?1:0)},0)
     return (
@@ -30,13 +47,13 @@ export default class Filter extends Component {
                 
                 <ul className="filters">
                     <li>
-                        <a ref = {this.all} href="#/" className="selected" onClick={this.handleAll}>All</a>
+                        <a ref = {this.all} href="#/" className={isAll?'selected':''} onClick={this.handleAll}>All</a>
                     </li>
                     <li>
-                        <a ref = {this.active} onClick = {this.handleActive}href="#/active">Active</a>
+                        <a ref = {this.active} className={isactive?'selected':''} onClick = {this.handleActive}href="#/active">Active</a>
                     </li>
                     <li>
-                        <a href="#/completed" onClick = {this.handleCompleted}>Completed</a>
+                        <a href="#/completed" className={iscompleted?'selected':''} onClick = {this.handleCompleted}>Completed</a>
                     </li>
                 </ul>
                

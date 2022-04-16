@@ -77,7 +77,7 @@ export default class App extends Component {
 		})
 		this.setState({todos:newTodos})
 	}
-	/* beEditing = (id)=>{
+	beEditing = (id)=>{
 		const{todos}=this.state
 		const newTodos = todos.map((todoObj)=>{
 		if(todoObj.id===id){
@@ -85,16 +85,32 @@ export default class App extends Component {
 			return todoObj	
 		})
 		this.setState({todos:newTodos})
-	} */
-	//css不是自己写的，实在对应不上edit的样式，函数没问题，渲染出不来
+	}
+	
 
+	beNtodo = (id, newValue) => {
+        const { todos } = this.state
+        const newTodos = todos.map((todoObj) => {
+            if (todoObj.id === id) {
+                todoObj.name = newValue
+                todoObj.edit = false
+                return todoObj
+            }
+
+            else {
+                todoObj.edit = false
+                return todoObj
+            }
+        })
+        this.setState({ todos: newTodos })
+    }
   render() {
 	const {todos} = this.state
     return (
     <div className='Todo'>
 		<section className="todoapp">
            	<Header todos={todos} addTodo={this.addTodo} tocheckall={this.tocheckall}/>
-			<List todos={todos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo} /* Editing={this.beEditing} *//>
+			<List todos={todos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo} Editing={this.beEditing} beNtodo={this.beNtodo}/>
 			<Filter todos={todos} viewAll={this.viewAll} viewActive={this.viewActive} deleteCpd={this.deleteCpd} viewCpd={this.viewCpd}/>
 		</section>
     </div>
