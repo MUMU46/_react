@@ -5,7 +5,22 @@ import Filter from './Components/Filter/Filter'
 import List from './Components/List/List'
 export default class App extends Component {
 
-	state = {todos:[]}
+	state = {todos:[],filter:'All'}
+
+	componentDidMount() {
+        document.addEventListener('myEvent', this.handleEvent)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('myEvent', this.handleEvent)
+    }
+    handleEvent = (e) => {
+		if(e.detail.isactive)
+			this.setState({filter:'Active'})
+		if(e.detail.iscompleted)
+        	this.setState({filter:'Completed'})
+		if(e.detail.isAll)
+			this.setState({filter:'All'})
+    }
 //添加一个todo，接受todo对象
 	addTodo = (todoObj)=>{
 		const{todos} = this.state//获取原todos
@@ -17,7 +32,15 @@ export default class App extends Component {
 		const{todos}=this.state
 		const newTodos = todos.map((todoObj)=>{
 			if(todoObj.id===id)
-			return{...todoObj,done}
+			{	
+				if(this.state.filter==='Active'||this.state.filter==='Completed')
+				{
+					return{...todoObj,done,flag:false}
+				}
+				else{
+					return{...todoObj,done}
+				}
+			}
 			else return todoObj
 		})
 		this.setState({todos:newTodos})
@@ -48,6 +71,7 @@ export default class App extends Component {
 		this.setState({todos:newTodos})
 	}
 	viewActive = ()=>{
+		console.log("app active")
 		const{todos}=this.state
 		/* const newTodos = todos.filter((todoObj) => {
 			return todoObj.done===false
@@ -110,8 +134,8 @@ export default class App extends Component {
     <div className='Todo'>
 		<section className="todoapp">
            	<Header todos={todos} addTodo={this.addTodo} tocheckall={this.tocheckall}/>
-			<List todos={todos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo} Editing={this.beEditing} beNtodo={this.beNtodo}/>
-			<Filter todos={todos} viewAll={this.viewAll} viewActive={this.viewActive} deleteCpd={this.deleteCpd} viewCpd={this.viewCpd}/>
+			<List todos={todos} changeTodo={this.changeTodo} deleteTodo={this.deleteTodo} Editing={this.beEditing} beNtodo={this.beNtodo} />
+			<Filter todos={todos} changeTodo={this.changeTodo}viewAll={this.viewAll} viewActive={this.viewActive} deleteCpd={this.deleteCpd} viewCpd={this.viewCpd}/>
 		</section>
     </div>
 	)

@@ -17,7 +17,7 @@ export default class List extends Component {
     return (
         <div style={{display: todos.length ? 'block' : 'none'}} className="main"> 
             {  todos.map((todo) => {
-                return  <Item key={todo.id} {...todo} changeTodo={changeTodo}  beNtodo={beNtodo} deleteTodo={deleteTodo} Editing={Editing}/>
+                return  <Item key={todo.id} {...todo} changeTodo={changeTodo}  beNtodo={beNtodo} deleteTodo={deleteTodo} Editing={Editing} />
             })}
             
 	    </div>

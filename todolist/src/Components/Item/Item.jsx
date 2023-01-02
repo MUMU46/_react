@@ -7,6 +7,7 @@ export default class Item extends Component {
             this.props.changeTodo(id,event.target.checked)
         }
     }
+    
     handleDelete = (id)=>{
         return(event)=>{
             this.props.deleteTodo(id)

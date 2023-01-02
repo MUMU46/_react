@@ -2,10 +2,16 @@
 import React, { Component } from 'react';
 
 export default class Filter extends Component {
-    
-    state={isactive:false,
+    state={
+        isactive:false,
         isAll:true,
         iscompleted:false
+        }
+
+        sendEvent = (s) => {
+            document.dispatchEvent(new CustomEvent('myEvent', {
+              detail:s
+            }))
         }
 
     handleAll = ()=>{
@@ -14,7 +20,12 @@ export default class Filter extends Component {
             isactive:false,
             iscompleted:false
         })
+        const s={
+            isAll:true,
+            isactive:false,
+            iscompleted:false}
         this.props.viewAll()
+        this.sendEvent(s)
     }
     handleActive = ()=>{
         this.setState({
@@ -22,7 +33,12 @@ export default class Filter extends Component {
             isactive:true,
             iscompleted:false
         })
+        const s={
+            isAll:false,
+            isactive:true,
+            iscompleted:false}
         this.props.viewActive()
+        this.sendEvent(s)
     }
     clearCompleted = ()=>{
         this.props.deleteCpd()
@@ -33,7 +49,12 @@ export default class Filter extends Component {
             isAll:false,
             iscompleted:true
         })
+        const s={
+            isactive:false,
+            isAll:false,
+            iscompleted:true}
         this.props.viewCpd()
+        this.sendEvent(s)
     }
   render() {
       const {todos} = this.props
